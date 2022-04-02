@@ -13,5 +13,6 @@
 
 - [ ] 整理ubuntu下的命令手册及注意事项
   - [ ] matlab 的安装方法
+- [x] 添加同步更新github， gitee
 - [ ] 整理windows下的运维注意事项
 
