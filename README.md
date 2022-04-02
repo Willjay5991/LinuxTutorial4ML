@@ -12,4 +12,6 @@
 ## todolist
 
 - [ ] 整理ubuntu下的命令手册及注意事项
+  - [ ] matlab 的安装方法
 - [ ] 整理windows下的运维注意事项
+
