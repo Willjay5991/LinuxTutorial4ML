@@ -77,39 +77,137 @@ mv /A/file /B  # 将文件从一个文件夹A移动到文件夹B
 copy A B       # 复制文件夹A到B
 ```
 
+### 跑自己的程序
+
+```
+nuhup python -u test.py > test.log 2>&1 &
+
+# 最后一个“&”表示后台运行程序
+# “nohup” 表示程序不被挂起
+# “python”表示执行python代码
+# “-u”表示不启用缓存，实时输出打印信息到日志文件（如果不加-u，则会导致日志文件不会实时刷新代码中的print函数的信息）
+# “test.py”表示python的源代码文件
+# “test.log”表示输出的日志文件
+# “>”表示将打印信息重定向到日志文件
+# “2>&1”表示将标准错误输出转变化标准输出，可以将错误信息也输出到日志文件中（0-> stdin, 1->stdout, 2->stderr）
+```
+
 
 
 ## python 环境
 
 - 安装 [anaconda](https://www.anaconda.com/)， 里面几乎涵盖了python的基础包，十分方便，自带pip包管理。
 
+- **更改conda源，pip源为国内镜像**， 由于cionda和pip的官方源（所谓源就是默认的下载地址）都是在国外，由于墙的存在，正常访问这些源很慢，甚至无法下载，所以要把这些源更换为国内的镜像网站。这里我们使用清华源为例，还有阿里源，中科院的源，淘宝源等等。
+
+  [更改pip源](https://mirrors.tuna.tsinghua.edu.cn/help/pypi/)
+
+  ```
+  pip install -i https://pypi.tuna.tsinghua.edu.cn/simple some-package # 临时使用清华源下载
+  ## 永久更改（建议使用）
+  mkdir ~/.pip   # 新建.pip 文件夹，如果已存在，跳过这一步
+  vim ~/.pip/pip.conf  # 新建并编辑pip.conf 文件 文件内容如下
+  ```
+
+  <center> ~/.pip/pip.conf</center>
+```
+  [global]
+  index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+  [install]
+  trusted-host = https://pypi.tuna.tsinghua.edu.cn
+  ```
+  
+[更改conda源](https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/)
+  
+```
+  conda config --show-source  # 查看当前系统默认的源
+  
+  # 永久更换默认源
+  vim ~/.condarc    # 打开编辑conda的配置文件, ~:表示当前用户的主目录
+                    # 把下面的内容 复制到 ~/.condarc，保存
+  conda clean -i    # 清空缓存的源`
+  source ~/.condarc # 使配置文件生效
+  ```
+  
+<center>更改源后 ~/.condarc  中的内容</center>
+     ```
+  show_channel_urls: true
+     channels:
+       - http://mirrors.bfsu.edu.cn/anaconda/pkgs/main
+       - http://mirrors.bfsu.edu.cn/anaconda/pkgs/r
+       - http://mirrors.bfsu.edu.cn/anaconda/pkgs/msys2
+       - defaults
+     custom_channels:
+       conda-forge: http://mirrors.bfsu.edu.cn/anaconda/cloud
+       msys2: http://mirrors.bfsu.edu.cn/anaconda/cloud
+       bioconda: http://mirrors.bfsu.edu.cn/anaconda/cloud
+       menpo: http://mirrors.bfsu.edu.cn/anaconda/cloud
+       pytorch: http://mirrors.bfsu.edu.cn/anaconda/cloud
+       simpleitk: http://mirrors.bfsu.edu.cn/anaconda/cloud
+     ```
+  
 - 强烈建议使用**conda 虚拟环境来管理个人的python环境**， python的强大在于他有各种各样的第三方包，可以避免重复造轮子。但成也萧何，败也萧何， python版本和第三方包版本的依赖有严格的对应关系，我们可能同时需要多个互不干扰的python版本。尤其在复现别人用torch，tensorflow等框架写的code的时候，最好每个项目建立一个虚拟环境，让他们相互不干扰，避免辛辛苦苦为新项目配好了一个环境，以前的项目却跑不了的尴尬。
 
+```
+conda create -n Newenv python=x.x # 创建名为Newenv的虚拟环境， x.x 为python版本
+conda env list	# 罗列所有虚拟环境,主要用于找到环境名，多了容易记不住
+source activate env_name	# linux 下激活虚拟环境指令
+...                         # 在这个环境中安装所需的包，运行程序
+source deactivate	# linux 推出当前虚拟环境（window环境前面不需要source）
+conda remove -n env_name --all	# 删除虚拟环境
+```
+
+
+
+- pip 和conda **在线**安装，卸载第三方包。注意使用pip和conda都可以安装第三方包，方便程度差不多，但是由于源的问题，有时候有的包只能用pip装，也有的只能用conda安装，大家灵活使用。
+
   ```
-  conda create -n Newenv python=x.x # 创建名为Newenv的虚拟环境， x.x 为python版本
-  conda env list	# 罗列所有虚拟环境,主要用于找到环境名，多了容易记不住
-  source activate env_name	# linux 下激活虚拟环境指令
-  ...                         # 在这个环境中安装所需的包，运行程序
+  pip install packagename [--user] # 安装名为packagename  [--user] 为可选参数，表示安装在当前用户目录
+  pip uninstall packagename        # 卸载
+  pip list   # 罗列所有已经安装的包
+  pip show  package # 显示已经按照的packaege的详细信息：版本，位置，等等
+  ```
+
+  对应的conda的命令
+
+  ```
+  conda install packagename
+  conda uninstall packagename
+  conda list
+  ```
+
+  **注意有时候，由于一些包并没有在镜像源里面，所以在线安装会出现访问超时**，**这时候我们可以使用本地安装**windows浏览器下载对应的包（.whl文件）.上传到linux,
+
+  ```
+  # 这里以/home/myname/download/a.whl 为例
+  cd /home/myname/download  # 切换到对应目录
+  pip install  a.whl   # 执行本地安装
+  ```
+
   
-  source deactivate	# linux 推出当前虚拟环境（window环境前面不需要source）
+
+- 
+
+- 
+
+  ```
   
-  conda remove -n env_name --all	# 删除虚拟环境
-  
-  conda list  # 查看安装了哪些包
-  conda updata conda	# 检查更新当前conda
-  # 查看当前源 
-  conda config --show-sources
   ```
 
   
 
   
 
-  
+## Matlab 环境
 
-  pip 和 conda 管理python的第三方包
+  - [ ] matlab 的安装涉及到挂载iso文件
+  - [ ] matlab 无桌面启动命令
 
 
+
+
+
+## 一些典型应用场景
 
 
 
@@ -353,12 +451,9 @@ nuhup python -u test.py > test.log 2>&1 &
    修改其内容为：
 
    ```
-   [global]
-   index-url = https://pypi.tuna.tsinghua.edu.cn/simple
-   [install]
-   trusted-host = https://pypi.tuna.tsinghua.edu.cn
+   
    ```
-
+   
    
 
 ## 13. 显卡操作

@@ -5,7 +5,9 @@
 
 - 以前写的比较乱，整理ing
 
-
+- 双平台同步更新
+  - [github](https://github.com/Willjay5991/LinuxTutorial4ML)
+  - [gitee](https://gitee.com/willjayhomesite/LinuxTutorial4ML)
 
 ## todolist
 
