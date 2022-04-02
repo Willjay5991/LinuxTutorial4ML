@@ -152,7 +152,6 @@ vim是大佬们做文本编辑的利器, 可以做到全部操作都在键盘上
   ```
 
   <center> ~/.pip/pip.conf</center>
-  
   ```
   [global]
   index-url = https://pypi.tuna.tsinghua.edu.cn/simple
@@ -161,7 +160,6 @@ vim是大佬们做文本编辑的利器, 可以做到全部操作都在键盘上
   ```
   
   <center>常用的pip源镜像</center>
-  
   ```
    阿里云 http://mirrors.aliyun.com/pypi/simple/
    中国科技大学 https://pypi.mirrors.ustc.edu.cn/simple/
@@ -189,7 +187,6 @@ vim是大佬们做文本编辑的利器, 可以做到全部操作都在键盘上
   ```
   
   <center>更改源后 ~/.condarc  中的内容</center>
-  
   ```
   show_channel_urls: true
   channels:
@@ -435,27 +432,3 @@ alias matlab=/usr/local/Matlab/R2018b/bin/matlab  # 把这条命令添加到文�
 
 source ~/.bash_aliases  # 使配置文件生效
 ```
-
-
-
- 
-
-
-
- 
-
-
-
-
-
-
-
-## 
-
-
-
-
-
-
-
-1. 3. 
