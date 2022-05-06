@@ -32,8 +32,8 @@
 - 添加新用户命令
 
 ```sh
-$ sudo useradd newuser   # Ubuntu 添加新用户， 用户名为：newuser
-$ sudo passwd newuser pw    # 为newuser(用户) 指定密码 pw（密码）
+$ sudo adduser newuser   # Ubuntu 添加新用户，并为其创建用户目录:/home/newuser， 用户名为：newuser，回车后会让输入密码，确认密码，以及其他详细信息（其他信息可以直接回车跳过），
+$ sudo passwd newuser pw    # 修改用户密码，为newuser(用户) 指定新密码 pw（密码）
 $ grep bash /etc/passwd  # 查看现有的所有用户
 $ cat /etc/group
 $ sudo userdel -r username  # 完全删除用户：删除用户，用户下的文件夹（使用这个命令一定要慎重，以防误删数据）
