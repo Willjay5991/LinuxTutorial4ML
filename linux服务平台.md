@@ -141,6 +141,8 @@ vim是大佬们做文本编辑的利器, 可以做到全部操作都在键盘上
 
 - 安装 [anaconda](https://www.anaconda.com/)， 里面几乎涵盖了python的基础包，十分方便，自带pip包管理。
 
+### pip源 和 anaconda源
+
 - **更改conda源，pip源为国内镜像**， 由于cionda和pip的官方源（所谓源就是默认的下载地址）都是在国外，由于墙的存在，正常访问这些源很慢，甚至无法下载，所以要把这些源更换为国内的镜像网站。这里我们使用清华源为例，还有阿里源，中科院的源，淘宝源等等。
 
   [更改pip源](https://mirrors.tuna.tsinghua.edu.cn/help/pypi/)
@@ -153,7 +155,7 @@ vim是大佬们做文本编辑的利器, 可以做到全部操作都在键盘上
   ```
 
   
-  
+
   <center> ~/.pip/pip.conf</center>
   ```
   [global]
@@ -161,7 +163,7 @@ vim是大佬们做文本编辑的利器, 可以做到全部操作都在键盘上
   [install]
   trusted-host = https://pypi.tuna.tsinghua.edu.cn
   ```
-  
+
   <center>常用的pip源镜像</center>
   ```
    阿里云 http://mirrors.aliyun.com/pypi/simple/
@@ -172,13 +174,13 @@ vim是大佬们做文本编辑的利器, 可以做到全部操作都在键盘上
    中国科学院 http://pypi.mirrors.opencas.cn/simple/
    清华大学 https://pypi.tuna.tsinghua.edu.cn/simple/
   ```
+
   
-  
-  
+
   [更改conda源](https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/)
-  
+
   ​	
-  
+
   ```sh
   $ conda config --show-source  # 查看当前系统默认的源
     
@@ -188,7 +190,7 @@ vim是大佬们做文本编辑的利器, 可以做到全部操作都在键盘上
   $ conda clean -i    # 清空缓存的源`
   $ source ~/.condarc # 使配置文件生效
   ```
-  
+
   <center>更改源后 ~/.condarc  中的内容</center>
   ```
   show_channel_urls: true
@@ -205,8 +207,9 @@ vim是大佬们做文本编辑的利器, 可以做到全部操作都在键盘上
    pytorch: http://mirrors.bfsu.edu.cn/anaconda/cloud
    simpleitk: http://mirrors.bfsu.edu.cn/anaconda/cloud
   ```
-  
-  
+
+
+### conda 虚拟环境
 
 
 - 强烈建议使用**conda 虚拟环境来管理个人的python环境**， python的强大在于他有各种各样的第三方包，可以避免重复造轮子。但成也萧何，败也萧何， python版本和第三方包版本的依赖有严格的对应关系，我们可能同时需要多个互不干扰的python版本。尤其在复现别人用torch，tensorflow等框架写的code的时候，最好每个项目建立一个虚拟环境，让他们相互不干扰，避免辛辛苦苦为新项目配好了一个环境，以前的项目却跑不了的尴尬。
