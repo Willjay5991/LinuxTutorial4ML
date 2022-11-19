@@ -208,7 +208,6 @@ vim是大佬们做文本编辑的利器, 可以做到全部操作都在键盘上
    simpleitk: http://mirrors.bfsu.edu.cn/anaconda/cloud
   ```
 
-
 ### conda 虚拟环境
 
 
@@ -251,6 +250,16 @@ vim是大佬们做文本编辑的利器, 可以做到全部操作都在键盘上
   ```
 
   
+
+### 机器学习框架安装
+
+  - 安装torch的时候需要对应自己电脑上的cuda版本安装，然而有些cuda版本在官网上没有对应的安装命令，可以尝试向下兼容的方法，比如我们机器上的cuda版本是cuda11.2， 我就采用了cuda 11.1对应的torch版本成功安装了
+  
+    ```
+    pip install torch==1.9.1+cu111 torchvision==0.10.1+cu111 torchaudio==0.9.1 -f https://download.pytorch.org/whl/torch_stable.html
+    ```
+  
+    
 
   
 
